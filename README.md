@@ -110,13 +110,13 @@ Alternatively, open the project in Visual Studio Code and use the built-in Jupyt
 
 Open the desired notebook in the browser:
 
-- Downsampling.ipynb
+- `models/Downsampling.ipynb`
 
-- Kmeansmodel.ipynb
+- `models/Kmeansmodel.ipynb`
 
-- FHMMmodel.ipynb
+- `models/FHMMmodel.ipynb`
 
-- Seq2seq.ipynb
+- `models/Seq2seq.ipynb`
   
 ---
 
