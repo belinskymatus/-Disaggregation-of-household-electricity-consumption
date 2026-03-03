@@ -98,6 +98,7 @@ source venv/bin/activate
 Install the required Python packages (see the Python dependencies section above).
 
 **Running the notebooks**
+
 Start Jupyter Lab or Jupyter Notebook:
 
 ```bash
@@ -116,94 +117,105 @@ Open the desired notebook in the browser:
 - FHMMmodel.ipynb
 
 - Seq2seq.ipynb
+  
+---
 
-# Working with data
-All input files are stored in the data folder.
+**Working with data**
 
-The Downsampling.ipynb notebook:
+All input files are stored in the `data` folder.
 
-loads original CSV files (e.g., redd_house1_0.csv to redd_house1_6.csv),
+The `Downsampling.ipynb` notebook:
 
-removes unnecessary columns,
+- loads original CSV files (e.g., `redd_house1_0.csv` to `redd_house1_6.csv`),
 
-creates a simulated time axis,
+- removes unnecessary columns,
 
-performs resampling to 5-second intervals using averaging,
+- creates a simulated time axis,
 
-saves the result as standardized_house1_X.csv, which is used as input for the models.
+- performs resampling to 5-second intervals using averaging,
 
-If you change the location or names of data files, update the file paths in the notebooks (pd.read_csv, open, read_json, etc.), for example:
+- saves the result as `standardized_house1_X.csv`, which is used as input for the models.
 
-python
+If you change the location or names of data files, update the file paths in the notebooks (`pd.read_csv`, `open`, `read_json`, etc.), for example:
+
+``` bash
 df = pd.read_csv("data/standardized_house1_0.csv")
-Model overview
-Combinatorial Optimization – Kmeansmodel.ipynb
-This notebook implements a heuristic Combinatorial Optimization (CO) method using K-means clustering on combined training data from standardized_house1_0.csv to standardized_house1_5.csv.
+```
+---
+
+**Model overview**
+
+*Combinatorial Optimization* – `Kmeansmodel.ipynb`
+This notebook implements a heuristic Combinatorial Optimization (CO) method using K-means clustering on combined training data from `standardized_house1_0.csv` to `standardized_house1_5.csv`.
 
 Key steps:
 
-build a training matrix from multiple CSV files,
+- build a training matrix from multiple CSV files,
 
-train the CO model on typical appliance consumption patterns,
+- train the CO model on typical appliance consumption patterns,
 
-disaggregate a test dataset (standardized_house1_6.csv) and optionally real data in data.json,
+- disaggregate a test dataset (`standardized_house1_6.csv`) and optionally real data in `data.json`,
 
-compute MAE, MSE, RMSE,
+- compute MAE, MSE, RMSE,
 
-visualize aggregate and disaggregated signals, including random time windows.
+- visualize aggregate and disaggregated signals, including random time windows.
 
-Factorial Hidden Markov Model – FHMMmodel.ipynb
+*Factorial Hidden Markov Model* – `FHMMmodel.ipynb`
 This notebook implements disaggregation using an FHMM, with separate HMMs per appliance combined into a single model.
 
 Workflow:
 
-load prepared CSV files standardized_house1_0.csv to standardized_house1_5.csv,
+- load prepared CSV files `standardized_house1_0.csv` to `standardized_house1_5.csv`,
 
-train the FHMM on aggregate + appliance-level data,
+- train the FHMM on aggregate + appliance-level data,
 
-disaggregate the test file standardized_house1_6.csv and data from data.json,
+- disaggregate the test file `standardized_house1_6.csv` and data from `data.json`,
 
-evaluate MAE, MSE, RMSE,
+- evaluate MAE, MSE, RMSE,
 
-plot aggregate consumption in black and predicted appliance signals in different colors.
+- plot aggregate consumption in black and predicted appliance signals in different colors.
 
-Seq2Seq CNN model – Seq2seq.ipynb
+*Seq2Seq CNN model* – `Seq2seq.ipynb`
 This notebook contains a Seq2Seq model with convolutional layers, where the input is a sequence of aggregated consumption and the output is the predicted consumption of one appliance.
 
 Main ideas:
 
-define sequence length, batch size, number of epochs, and lists of training/test CSV files,
+- define sequence length, batch size, number of epochs, and lists of training/test CSV files,
 
-create overlapping sequences (create_sequences), normalize and denormalize data, load input–target pairs per appliance,
+- create overlapping sequences (`create_sequences`), normalize and denormalize data, load input–target pairs per appliance,
 
-train a separate model for each appliance on data from standardized_house1_0.csv to standardized_house1_5.csv,
+- train a separate model for each appliance on data from `standardized_house1_0.csv` to `standardized_house1_5.csv`,
 
-test on standardized_house1_6.csv and data.json,
+- test on `standardized_house1_6.csv` and `data.json`,
 
-compute MAE, MSE, RMSE and visualize hourly windows and full-series plots.
+- compute MAE, MSE, RMSE and visualize hourly windows and full-series plots.
 
-Evaluation and visualization
+---
+
+**Evaluation and visualization**
 For all models, standard error metrics are computed between actual and predicted consumption:
 
-MAE – Mean Absolute Error
+- MAE – Mean Absolute Error
 
-MSE – Mean Squared Error
+- MSE – Mean Squared Error
 
-RMSE – Root Mean Squared Error
+- RMSE – Root Mean Squared Error
 
 The notebooks also:
 
-print actual vs. predicted consumption per appliance,
+- print actual vs. predicted consumption per appliance,
 
-generate plots comparing total consumption with disaggregated components,
+- generate plots comparing total consumption with disaggregated components,
 
-show zoomed-in time windows for detailed inspection.
+- show zoomed-in time windows for detailed inspection.
+---
 
-Author
-Author: Matúš Belinský
+**Author**
 
-Faculty: Faculty of Electrical Engineering and Informatics, Technical University of Košice
+- Author: Matúš Belinský
 
-Study program / field: Business Informatics / Informatics
+- Faculty: Faculty of Electrical Engineering and Informatics, Technical University of Košice
 
-Year: 2025
+- Study program / field: Business Informatics / Informatics
+
+- Year: 2025
