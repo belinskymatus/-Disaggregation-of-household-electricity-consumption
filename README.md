@@ -68,3 +68,130 @@ You can install everything at once with:[file:1]
 
 ```bash
 pip install tensorflow keras scikit-learn matplotlib pandas hmmlearn seaborn numpy
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/belinskymatus/-Disaggregation-of-household-electricity-consumption.git
+cd -Disaggregation-of-household-electricity-consumption
+(Optional) Create and activate a virtual environment:
+
+python -m venv venv
+
+# Windows
+venv\Scripts\activate
+
+# Linux / macOS
+source venv/bin/activate
+Install the required Python packages (see section above).
+
+Running the notebooks
+Start Jupyter Lab or Jupyter Notebook:
+
+jupyter lab
+# or
+jupyter notebook
+Alternatively, open the project in Visual Studio Code and use the built-in Jupyter support.file:1
+
+Open the desired notebook in the browser:
+
+Downsampling.ipynb
+
+Kmeansmodel.ipynb
+
+FHMMmodel.ipynb
+
+Seq2seq.ipynb
+
+Execute the notebook cells sequentially (typically with Shift + Enter).file:1
+
+Working with data
+All input files are stored in the data folder.file:1
+
+Downsampling.ipynb
+This notebook:
+
+loads original CSV files (e.g., redd_house1_0.csv to redd_house1_6.csv)
+
+removes unnecessary columns
+
+creates a simulated time axis
+
+performs resampling to 5-second intervals using averaging
+
+saves the result as standardized_house1_X.csv, which is used as input for the models.file:2
+
+If you change the location or names of data files, update the file paths in the notebooks (pd.read_csv, open, read_json, etc.):
+
+df = pd.read_csv("data/standardized_house1_0.csv")
+Model overview
+Combinatorial Optimization – Kmeansmodel.ipynb
+This notebook implements a heuristic Combinatorial Optimization (CO) method using K-means clustering on combined training data from standardized_house1_0.csv to standardized_house1_5.csv.file:2
+
+Key steps:file:2
+
+build a training matrix from multiple CSV files
+
+train the CO model on typical appliance consumption patterns
+
+disaggregate a test dataset (standardized_house1_6.csv) and optionally real data in data.json
+
+compute MAE, MSE, RMSE
+
+visualize aggregate and disaggregated signals, including random time windows
+
+Factorial Hidden Markov Model – FHMMmodel.ipynb
+This notebook implements disaggregation using an FHMM, with separate HMMs per appliance combined into a single model.file:2
+
+Workflow:file:2
+
+load prepared CSV files standardized_house1_0.csv to standardized_house1_5.csv
+
+train the FHMM on aggregate + appliance-level data
+
+disaggregate the test file standardized_house1_6.csv and data from data.json
+
+evaluate MAE, MSE, RMSE
+
+plot aggregate consumption in black and predicted appliance signals in different colors
+
+Seq2Seq CNN model – Seq2seq.ipynb
+This notebook contains a Seq2Seq model with convolutional layers, where the input is a sequence of aggregated consumption and the output is the predicted consumption of one appliance.file:1
+
+Main ideas:file:2
+
+define sequence length, batch size, number of epochs, and lists of training/test CSV files
+
+create overlapping sequences (create_sequences), normalize and denormalize data, load input–target pairs per appliance
+
+train a separate model for each appliance on data from standardized_house1_0.csv to standardized_house1_5.csv
+
+test on standardized_house1_6.csv and data.json
+
+compute MAE, MSE, RMSE and visualize hourly windows and full-series plots
+
+Evaluation and visualization
+For all models, standard error metrics are computed between actual and predicted consumption:file:1
+
+MAE – Mean Absolute Error
+
+MSE – Mean Squared Error
+
+RMSE – Root Mean Squared Error
+
+The notebooks also:
+
+print actual vs. predicted consumption per appliance
+
+generate plots comparing total consumption with disaggregated components
+
+show zoomed-in time windows for detailed inspection.file:1
+
+Author
+Author: Matúš Belinskýfile:1
+Faculty: Faculty of Electrical Engineering and Informatics, Technical University of Košicefile:1
+Study program / field: Business Informatics / Informaticsfile:1
+Year: 2025file:1
+
